@@ -9,7 +9,7 @@ const {verifyToken, verifyIsAdmin} = require('../auth')
 router.post('/adminLogin', adminLogin, verifyToken, verifyIsAdmin)
 
 router.get('/getAllProducts', getAllProducts)
-router.get('/getSingleProduct/:productId', getSingleProduct)
+router.get('/getSingleProduct/:productId',verifyToken, getSingleProduct)
 
 
 router.get('/all', verifyToken, verifyIsAdmin, getAllUsers)
