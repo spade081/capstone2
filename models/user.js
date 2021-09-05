@@ -4,25 +4,26 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
 	firstName:String,
 	lastName:String,
-	address:String,
 	email:String,
 	password:String,
 	isAdmin:{
 		type:Boolean,
 		default:false
 	},
-
-		
-		// productId: String,
-		// // orderedOn:{
-		// // 	type:Date,
-		// // 	default:new Date()
-		// // },
-		// // status:{
-		// // 	type:String,
-		// // 	default:"Ordered"
-		// }
-
+		purchasing:[
+			{
+				
+				productId: String,
+				orderedOn:{
+				type:Date,
+				default:new Date()
+			},
+				status:{
+				type:String,
+				default:"Ordered"
+		}
+			}
+	]
 })
 
 const User = mongoose.model('User', userSchema)

@@ -4,10 +4,8 @@ const secret = "kayapasir?";
 module.exports.createAccessToken = (authenticatedUser)=>{
 	const data = {
 		id:authenticatedUser._id,
-		firstName:authenticatedUser.firstName,
 		name:authenticatedUser.name,
-		// lastName:authenticatedUser.lastName,
-		// address:authenticatedUser.address,
+	
 		email:authenticatedUser.email,
 		isAdmin: authenticatedUser.isAdmin
 	}
@@ -31,13 +29,13 @@ module.exports.verifyToken = (req, res, next)=>{
 		});
 	}
 }
-module.exports.verifyIsAdmin = (req, res, next)=>{
-	if(req.decodedUser.isAdmin){
-		next();
-	}else{
-		res.send(`403 Forbidden! Admin access only`)
-	}
-}
+// module.exports.verifyIsAdmin = (req, res, next)=>{
+// 	if(req.decodedUser.isAdmin){
+// 		next();
+// 	}else{
+// 		res.send(`403 Forbidden! Admin access only`)
+// 	}
+// }
 
 module.exports.verifyIsAdmin = (req,res ,next) =>{
 		//receive the req.decodedUser

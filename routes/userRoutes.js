@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const {register, getAllUsers ,getAllProducts, adminLogin, getSingleProduct, userToAdmin} = require('../controller/userController')
+const {register, getAllUsers ,getAllProducts, login, getSingleProduct, userToAdmin, profile} = require('../controller/userController')
 const {verifyToken, verifyIsAdmin} = require('../auth')
 
 
 
 
-router.post('/adminLogin', adminLogin, verifyToken, verifyIsAdmin)
+router.post('/login', login)
 
-router.get('/getAllProducts', getAllProducts)
-router.get('/getSingleProduct/:productId',verifyToken, getSingleProduct)
+router.get('/getAllProducts',getAllProducts)
+router.get('/profile', verifyToken, profile)
+
+router.get('/getSingleProduct/:productId', getSingleProduct)
 
 
 router.get('/all', verifyToken, verifyIsAdmin, getAllUsers)

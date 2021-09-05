@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes')
+const cartRoutes = require('./routes/cartRoutes')
 require('dotenv').config()
 const cors = require('cors')//this allows your site to connect to to server
 
@@ -26,6 +27,7 @@ db.once('open', ()=> console.log("We are connected to our Cloud Database"))
 app.use('/users', userRoutes)
 app.use('/products', productRoutes)
 app.use('/orders', orderRoutes)
+app.use('/carts', cartRoutes )
 
 app.listen(port, ()=> console.log(`Server is listening to the port ${port}`))
 

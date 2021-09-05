@@ -17,7 +17,7 @@ module.exports.getAllUsers = (req, res) =>{
 module.exports.getAllProducts =(req, res)=>{
 	Product.find({isActive:true}, (err,result)=>{
 		if(err){
-			console.log(err)
+			res.send(false)
 		}else{
 			res.send(result)
 		}
@@ -26,25 +26,13 @@ module.exports.getAllProducts =(req, res)=>{
 
 }
 
-
-module.exports.getSingleProduct = (req, res)=>{
-
-	let id = req.params.productId
-	
-	
-	Product.findOne({_id: id}, (err, foundProduct)=>{
-		if(err){
-			console.log(err)
-		}else{
-			res.send(foundProduct)
-		}
-	})
+module.exports.getSingleProduct = (req, res) => {
+	Product.findById({_id: req.params.productId}, (err, foundProduct) => (err) ? res.send(err) : res.send(foundProduct));
 }
-
 
 module.exports.register = (req, res)=>{
 	let hashedPassword = bcrypt.hashSync(req.body.password, 10)
-	if(req.body.firstName && req.body.lastName && req.body.address && req.body.email && req.body.password ){
+	if(req.body.firstName && req.body.lastName  && req.body.email && req.body.password ){
 		User.findOne({email:req.body.email},(err,foundUser)=>{
 			if(foundUser != null){
 				res.send(`email already exists`)
@@ -52,7 +40,6 @@ module.exports.register = (req, res)=>{
 					let registerUser = new User({
 						firstName: req.body.firstName,
 						lastName: req.body.lastName,
-						address: req.body.address,
 						email: req.body.email,
 						password:hashedPassword
 					});
@@ -61,7 +48,7 @@ module.exports.register = (req, res)=>{
 					if(err){
 						console.log(err)
 					}else{
-						res.send(`User is Successfully Added!`)
+						res.send(true)
 					}
 				});
 			}
@@ -74,11 +61,11 @@ module.exports.register = (req, res)=>{
 	}
 
 }
-module.exports.product = (req, res)=>{
+// module.exports.product = (req, res)=>{
 
-}
+// }
 
-module.exports.adminLogin = (req, res)=>{
+module.exports.login = (req, res)=>{
 	User.findOne({email:req.body.email}, (err, foundUser)=>{
 		if(err){
 			console.log(err)
@@ -89,12 +76,24 @@ module.exports.adminLogin = (req, res)=>{
 					if(isPasswordCorrect){
 						res.send({accessToken: createAccessToken(foundUser)});
 					}else{
-						res.send("credentials are incorrect!")
+						// res.send("credentials are incorrect!")
+						// return false
+						res.send(false)
 					}
 				}
 			}else{
-				res.send(`email is incorrect`)
+				// res.send(`email is incorrect`)
+					res.send(false)
 			}
+		}
+	})
+}
+module.exports.profile = (req, res) => { 
+	User.findOne({ _id: req.decodedUser.id }, (err, foundUser) => {
+		if(err){
+			console.log(err)
+		}else{
+			res.send(foundUser)
 		}
 	})
 }

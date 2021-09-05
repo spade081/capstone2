@@ -5,6 +5,7 @@ const productSchema = new Schema({
 	name:String,
 	description:String,
 	price:Number,
+
 	isActive:{
 		type:Boolean,
 		default:true
@@ -15,7 +16,7 @@ const productSchema = new Schema({
 	},
 	productSearch:[
 		{
-			productId:String,
+			userId:String,
 			productOn:{
 				type:Date,
 				default: new Date

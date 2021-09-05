@@ -7,7 +7,7 @@ const {createAccessToken} = require('../auth')
 module.exports.getAllProducts = (req, res)=>{
 	Product.find({}, (err,result)=>{
 		if(err){
-			console.log(err)
+			res.send(false)
 		}else{
 			res.send(result)
 		}
@@ -27,7 +27,9 @@ module.exports.getSingleProduct = (req, res)=>{
 		}
 	})
 }
-
+// module.exports.getSingleProduct = (req, res) => {
+// 	Course.findById({_id: req.params.courseId}, (err, foundCourse) => (err) ? res.send(err) : res.send(foundProduct));
+// }
 
 module.exports.inputNewProduct = (req, res) =>{
 
@@ -45,7 +47,7 @@ module.exports.inputNewProduct = (req, res) =>{
 					if(err){
 						console.log(err)
 					}else{
-						res.send(`Product is Successfully Added`)
+						res.send(true)
 					}
 				})
 			}
@@ -66,9 +68,9 @@ module.exports.updateProduct = (req, res) =>{
 	let options = {new:true}
 	Product.findByIdAndUpdate(id, {$set:updates},options,(err,updatedProduct)=>{
 		if(err){
-			console.log(err);
+			res.send(false)
 		}else{
-			res.send(`Product updated Successfully`)
+			res.send(true)
 		}
 	})
 }
@@ -83,11 +85,24 @@ module.exports.archiveProduct = (req, res)=>{
 		if(err){
 			console.log(err)
 		}else{
-			let response = {
-				message: `Product archived successfully`,
-				archivedProduct: archivedProduct
-			}
-			res.send(response);
+			console.log(archivedProduct)
+			res.send(true);
+		}
+	})
+}
+
+module.exports.activateProduct = (req, res) =>{
+	let id = req.params.productId;
+	let updates = {
+		isActive: true
+	}
+	let options = {new:true}
+	Product.findByIdAndUpdate(id, updates, options, (err, activatedProduct) =>{
+		if(err){
+			console.log(err);
+		}else{
+		
+			res.send(true);
 		}
 	})
 }
